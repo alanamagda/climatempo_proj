@@ -1,7 +1,7 @@
 // Importação da biblioteca date-fns para manipulação de datas
 const { format, addDays, max, min } = require('date-fns');
 
-// Definição dos modelos e do intervalo de datas
+// Definição dos modelos e do intervalo de datas definidos no projeto
 const modelos = {
   'METEOROLOGIST': '0:4',
   'WRF': '5:14',
@@ -13,14 +13,14 @@ const periodo = {
   'fim': '2023-03-20 22:00:00'
 };
 
-// Conversão das datas iniciais e finais para o formato Date
+// Convertendo as datas iniciais e finais para o formato Date
 const inicio = new Date(periodo['inicio']);
 const fim = new Date(periodo['fim']);
 
-// Array para armazenar os resultados
+// Array para armazenar os resultados obtidos
 const result = [];
 
-// Iteração pelos modelos e limites
+// Iteração dos modelos juntamente com os limites das datas
 for (const [modeloPrevisao, limites] of Object.entries(modelos)) {
   // Extração dos limites de início e fim do modelo
   const [modeloInicio, modeloFim] = limites.split(':').map(Number);
@@ -28,13 +28,13 @@ for (const [modeloPrevisao, limites] of Object.entries(modelos)) {
   const modeloInicioData = addDays(inicio, modeloInicio);
   const modeloFimData = addDays(inicio, modeloFim);
 
-  // Verificação se o modelo está dentro do intervalo definido
+  // Verificação se o modelo está dentro do intervalo definido e se está alinhado com o limite e qual modelo executar
   if (modeloInicioData <= fim && modeloFimData >= inicio) {
     // Ajuste das datas de início e fim caso necessário
     const dataInicial = max(modeloInicioData, inicio);
     const dataFinal = min(modeloFimData, fim);
 
-    // Adição do modelo e período ao array de resultados
+    // Adição do modelo e período ao array de resultados e consequentemente visualização
     result.push({
       'Modelo Meteorológico': modeloPrevisao,
       'Data Inicial': format(dataInicial, 'yyyy-MM-dd HH:mm:ss'),
@@ -43,5 +43,5 @@ for (const [modeloPrevisao, limites] of Object.entries(modelos)) {
   }
 }
 
-// Impressão dos resultados
+// resultados
 console.log(result);
